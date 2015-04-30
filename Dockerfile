@@ -16,10 +16,10 @@ RUN export uid=1000 gid=1000 && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown ${uid}:${gid} -R /home/developer
 
+USER developer
+ENV HOME /home/developer
+
 RUN wget https://www.nsnam.org/release/ns-allinone-3.22.tar.bz2 -O /home/developer/ns-3.tar.bz2
 RUN cd /home/developer && tar jxf ns-3.tar.bz2 && cd ns-allinone-3.22 && \
     ./build.py --enable-examples --enable-tests --build-options=--progress
-RUN rm /home/developer/ns-3.tar.bz2 && apt-get autoclean && apt-get clean
-
-USER developer
-ENV HOME /home/developer
+RUN rm /home/developer/ns-3.tar.bz2 && sudo apt-get autoclean && sudo apt-get clean
